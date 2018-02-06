@@ -12,6 +12,7 @@ var connection = mysql.createConnection({
 });
 
 
+// Query and send results to webpage /////////////////////////////////////
 app.get("/", function(req, res){
 
   var q = 'SELECT COUNT(*) AS total FROM users ';
@@ -26,18 +27,9 @@ app.get("/", function(req, res){
   //connection.end();
 })
 
-app.get("/joke", function(req, res){
-  console.log("Got request");
-  res.send("Got request. What do you a sausage with no hands?");
-})
-
-app.get("/nums", function(req, res){
-  console.log("Got request");
-  var num = Math.floor((Math.random() * 10) +1);
-  res.send("Got request. Your number for today: " + num);
-})
 
 
+// SERVER PORT to listen on ////////////////////////////////////////////////
 app.listen(8080, function(){
   console.log("\nServer running on 8080\n");
 });
