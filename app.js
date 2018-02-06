@@ -2,9 +2,13 @@ var express= require('express');
 var app = express();
 var faker = require('faker');
 var mysql = require('mysql');
+var bodyparser = require("body-parser");
 
-// WTF is this magic
+// view engine ejs: Allow POSTing from home.ejs
+// bodyparser allows getting data from home.ejs form
 app.set("view engine", "ejs");
+app.use(bodyparser.urlencoded({extended: true}));
+
 
 // DATABASE SETUP /////////////////////////////////////////////////////////
 var connection = mysql.createConnection({
@@ -27,10 +31,24 @@ app.get("/", function(req, res){
     var mysqlResults = results[0].total;
     //res.send("Got request. Subscribers: " + mysqlResults);
 
-    res.render("home", {data: mysqlResults});
+    res.render("home", {data: mysqlResults, favorite_color:'purple'});
   });
   //connection.end();
 })
+
+
+// Receive POST from home.ejs <form>
+app.post("/register", function(req, res){
+
+  var person= {
+    email: req.body.email
+  };
+  var q = 'INSERT INTO users SET ?';
+  connection.query(q, person, function(error, result){
+    if(error) throw error;
+    console.log(result);
+  });
+});
 
 
 

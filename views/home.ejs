@@ -1,7 +1,12 @@
 <h1>JOIN US</h1>
+
+
+<h1><%= favorite_color%></h1>
+
+
 <p class="lead">Enter your email to join <strong><%=data%></strong>
   others on our waitlist.</p>
 <form method="POST" action = '/register'>
-  <input type="text" class="form" placeholder="Enter your email">
+  <input type="text" name="email" class="form" placeholder="Enter your email">
   <button>Join Now</button>
 </form>
