@@ -3,6 +3,9 @@ var app = express();
 var faker = require('faker');
 var mysql = require('mysql');
 
+// WTF is this magic
+app.set("view engine", "ejs");
+
 // DATABASE SETUP /////////////////////////////////////////////////////////
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -12,7 +15,7 @@ var connection = mysql.createConnection({
 });
 
 
-// Query and send results to webpage /////////////////////////////////////
+// Query and send results to webpage //////////////////////////////////////
 app.get("/", function(req, res){
 
   var q = 'SELECT COUNT(*) AS total FROM users ';
@@ -22,7 +25,9 @@ app.get("/", function(req, res){
   connection.query(q, function (error, results, fields) {
     if (error) throw error;
     var mysqlResults = results[0].total;
-    res.send("Got request. Subscribers: " + mysqlResults);
+    //res.send("Got request. Subscribers: " + mysqlResults);
+
+    res.render("home", {data: mysqlResults});
   });
   //connection.end();
 })
